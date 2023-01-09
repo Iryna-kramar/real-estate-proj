@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const PropertyContext = React.createContext();
@@ -10,8 +9,6 @@ const PropertyProvider = ({ children }) => {
 
   const baseUrl = "https://bayut.p.rapidapi.com";
 
-
-
   const fetchApi = async (url) => {
     const { data } = await axios.get(url, {
       headers: {
@@ -21,6 +18,7 @@ const PropertyProvider = ({ children }) => {
     });
     return data;
   };
+  
 
   const getStaticProps = async () => {
     const propertyForSaleData = await fetchApi(

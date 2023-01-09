@@ -12,10 +12,8 @@ const Search = () => {
   const [properties, setProperties] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(searchParams.get("purpose"));
 
   const { fetchApi, baseUrl } = useContext(PropertyContext);
-  console.log(properties);
 
   const getServerSideProps = async () => {
     const purpose = searchParams.get("purpose") || "for-rent";

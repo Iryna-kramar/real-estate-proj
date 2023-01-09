@@ -22,12 +22,12 @@ const Property = ({
   },
 }) => {
   return (
-    <Link href={`/property/${externalID}`} >
+    <Link href={`/property/${externalID}`}>
       <Flex
         flexWrap="wrap"
         w="420px"
         p="5"
-        paddingTop="0"
+        paddingTop="0px"
         justifyContent="flex-start"
         cursor="pointer"
       >
@@ -67,7 +67,7 @@ const Property = ({
             <FaBath /> | {millify(area)} sqft <BsGridFill />
           </Flex>
           <Text fontSize="lg">
-            {title.lenght > 30 ? `${title.substring(0, 30)}...` : title}
+            {title.length > 30 ? title.substring(0, 30) + "..." : title}
           </Text>
         </Box>
       </Flex>
