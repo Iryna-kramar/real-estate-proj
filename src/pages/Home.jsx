@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Flex, Box, Text, Button } from "@chakra-ui/react";
-import { images } from "../../constants";
+import React, { useEffect, useState, useContext } from "react";
+import { Flex, Box, Text, Button, Link, Image } from "@chakra-ui/react";
+import { images } from "../constants";
 
-import { baseUrl, fetchApi } from "../../utils/fetchApi";
-import Property from "../../components/Property";
+import Property from "../components/Property";
+import { PropertyContext } from "../context/context";
 
 const Banner = ({
   purpose,
@@ -17,7 +16,7 @@ const Banner = ({
   imageUrl,
 }) => (
   <Flex flexWrap="wrap" justifyContent="center" alignItems="center" m="10">
-    <img src={imageUrl} width={500} height={300} alt="banner" />
+    <Image src={imageUrl} width={500} height={300} alt="banner" />
     <Box p="5">
       <Text color="gray.500" fontSize="sm" fontWeight="medium">
         {purpose}
@@ -40,25 +39,13 @@ const Banner = ({
 );
 
 const Home = () => {
-  const [propertyForSale, setPropertyForSale] = useState([]);
-  const [propertyForRent, setPropertyForRent] = useState([]);
+  const {
+    propertyForRent,
+    propertyForSale,
+    getStaticProps,
+  } = useContext(PropertyContext);
 
   useEffect(() => {
-    const getStaticProps = async () => {
-      const propertyForSaleData = await fetchApi(
-        `${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-sale&hitsPerPage=6`
-      );
-
-      setPropertyForSale(propertyForSaleData?.hits);
-      console.log(propertyForSale);
-
-      const propertyForRentData = await fetchApi(
-        `${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-rent&hitsPerPage=6`
-      );
-
-      setPropertyForRent(propertyForRentData?.hits);
-    };
-
     // getStaticProps();
   }, []);
 
@@ -89,10 +76,11 @@ const Home = () => {
         linkName="/search?purpose=for-sale"
         imageUrl={images.RentImg}
       />
-
-      {propertyForSale.map((property) => (
-        <Property property={property} key={property.id} />
-      ))}
+      <Flex flexWrap="wrap">
+        {propertyForSale.map((property) => (
+          <Property property={property} key={property.id} />
+        ))}
+      </Flex>
     </Box>
   );
 };
